@@ -1,0 +1,8 @@
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/bin/Debug/Project_TARDIS.S2_Starter.exe.config
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/bin/Debug/Project_TARDIS.S2_Starter.exe.mdb
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/bin/Debug/Project_TARDIS.S2_Starter.pdb
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/bin/Debug/Project_TARDIS.S2_Starter.exe
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/obj/Debug/Project_TARDIS.S2_Starter.exe
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/obj/Debug/Project_TARDIS.S2_Starter.exe.mdb
+/Users/Connor/Desktop/Demo_ Project_TARDIS.S2_Starter/Project_TARDIS.S2_Starter/obj/Debug/Project_TARDIS.S2_Starter.pdb
