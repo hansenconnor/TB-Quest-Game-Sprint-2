@@ -73,7 +73,7 @@ namespace Project_TARDIS
         {
             TravelerAction travelerActionChoice;
 
-            _gameConsoleView.DisplayWelcomeScreen();
+            //_gameConsoleView.DisplayWelcomeScreen();
 
             InitializeMission();
 
@@ -107,6 +107,11 @@ namespace Project_TARDIS
                     case TravelerAction.PickUpItem:
                         int itemID;
                         itemID = _gameConsoleView.DisplayPickUpItem();
+
+						if (itemID == 0)
+						{
+							break;
+						}
 
                         Item PickedUpItem = new Item();
                         PickedUpItem = _gameUniverse.GetItemtByID(itemID);
@@ -195,9 +200,9 @@ namespace Project_TARDIS
         private void InitializeMission()
         {
             _gameConsoleView.DisplayMissionSetupIntro();
-            _gameTraveler.Name = _gameConsoleView.DisplayGetTravelersName();
-            _gameTraveler.Race = _gameConsoleView.DisplayGetTravelersRace();
-            _gameTraveler.SpaceTimeLocationID = _gameConsoleView.DisplayGetTravelersNewDestination().SpaceTimeLocationID;
+			_gameConsoleView.DisplayGetTravelersName();
+			_gameConsoleView.DisplayGetTravelersRace();
+			_gameTraveler.SpaceTimeLocationID = 1;
 
             // 
             // add initial items to the traveler's inventory

@@ -8,6 +8,8 @@ namespace Project_TARDIS
 {
     public class Item : GameObject
     {
+		#region properties
+
         public override int GameObjectID { get; set; }
 
         public override string Name { get; set; }
@@ -21,6 +23,19 @@ namespace Project_TARDIS
         public override int Value { get; set; }
 
         public override bool CanAddToInventory { get; set; }
+
+		public string itemArt { get; set; }
+
+		#endregion properties
+
+
+		#region fields
+
+		private string _itemArt;
+
+		#endregion
+
+
 
     }
 }

@@ -29,6 +29,11 @@ namespace Project_TARDIS
         //
         public List<Treasure> Treasures { get; set; }
 
+		//
+		// list of all NPCs
+		//
+		public List<NPC> NPCs { get; set; }
+
         #endregion
 
         #region ***** constructor *****
@@ -44,6 +49,7 @@ namespace Project_TARDIS
 			this.SpaceTimeLocations = new List<SpaceTimeLocation>();
             this.Items = new List<Item>();
             this.Treasures = new List<Treasure>();
+			this.NPCs = new List<NPC>();
 
             //
             // add all of the space-time locations and game objects to their lists
@@ -51,6 +57,7 @@ namespace Project_TARDIS
             IntializeUniverseSpaceTimeLocations();
             IntializeUniverseItems();
             IntializeUniverseTreasures();
+			IntializeUniverseNPCs();
         }
 
         #endregion
@@ -273,6 +280,31 @@ namespace Project_TARDIS
             return treasuresInSpaceTimeLocation;
         }
 
+		/// get a list of NPCs using a space-time location ID
+		/// </summary>
+		/// <param name="ID">space-time location ID</param>
+		/// <returns>list of NPCs in the specified location</returns>
+		public List<NPC> GetNPCsBySpaceTimeLocationID(int ID)
+		{
+			// TODO validate SpaceTimeLocationID
+
+			List<NPC> NPCsInSpaceTimeLocation = new List<NPC>();
+
+			//
+			// run through the NPC list and put all items in the current location
+			// into a list
+			//
+			foreach (NPC npc in NPCs)
+			{
+				if (npc.SpaceTimeLocationID == ID)
+				{
+					NPCsInSpaceTimeLocation.Add(npc);
+				}
+			}
+
+			return NPCsInSpaceTimeLocation;
+		}
+
         #endregion
 
         #region ***** define methods to initialize all game elements *****
@@ -282,7 +314,7 @@ namespace Project_TARDIS
         /// </summary>
         private void IntializeUniverseSpaceTimeLocations()
         {
-            SpaceTimeLocations.Add(new SpaceTimeLocation
+			SpaceTimeLocations.Add(new SpaceTimeLocation
 			{
 				Name = "Rivendell",
 				SpaceTimeLocationID = 1,
@@ -345,7 +377,8 @@ namespace Project_TARDIS
 				SpaceTimeLocationID = 3,
 				HasValue = false,
 				Value = 0,
-				CanAddToInventory = true
+				CanAddToInventory = true,
+				itemArt = "      /| _____________\nO|===|* >____________\n      \\|"
 			});
 
 			Items.Add(new Item
@@ -357,7 +390,9 @@ namespace Project_TARDIS
 				SpaceTimeLocationID = 2,
 				HasValue = false,
 				Value = 0,
-				CanAddToInventory = true
+				CanAddToInventory = true,
+				itemArt = "      " +
+					"______ ______\n    _/      Y      \\_\n   // ~~ ~~ | ~~ ~  \\\\\n  // ~ ~ ~~ | ~~~ ~~ \\\\      \n //________.|.________\\\\     \n`----------`-'----------'"
 			});
 
 			Items.Add(new Item
@@ -369,19 +404,28 @@ namespace Project_TARDIS
 				SpaceTimeLocationID = 3,
 				HasValue = true,
 				Value = 75,
-				CanAddToInventory = true
+				CanAddToInventory = true,
+				itemArt = 
+					" _________________.---.______\n" +
+					"(_(______________(_o o_(____()\n" +
+					"             .___.'. .'.___.\n" +
+					"             \\ o    Y    o /\n" +
+					"              \\ \\__   __/ /\n" +
+					"               '.__'-'__.'\n" +
+					"                   '''\n"
 			});
 
 			Items.Add(new Item
 			{
-				Name = "Short-Sword +3",
+				Name = "Short-Sword",
 				GameObjectID = 5,
 				Description = "A short-sword with a sharp edge. " +
 					"This could prove useful.",
 				SpaceTimeLocationID = 3,
 				HasValue = true,
 				Value = 75,
-				CanAddToInventory = true
+				CanAddToInventory = true,
+				itemArt = "    /\nO===[====================-\n    \\"
 			});
         }
 
@@ -428,6 +472,33 @@ namespace Project_TARDIS
 				CanAddToInventory = true
 			});
         }
+
+		private void IntializeUniverseNPCs()
+		{
+			NPCs.Add(new NPC
+			{
+				Name = "Gandalf",
+				SpaceTimeLocationID = 2,
+				HasMessage = true,
+				Message = "Fly you fools!"
+			});
+
+			NPCs.Add(new NPC
+			{
+				Name = "Elrond",
+				SpaceTimeLocationID = 1,
+				HasMessage = true,
+				Message = "Good luck on your journey, traveler."
+			});
+
+			NPCs.Add(new NPC
+			{
+				Name = "Unknown",
+				SpaceTimeLocationID = 3,
+				HasMessage = true,
+				Message = "The dwarf says nothing and avoids your gaze."
+			});
+		}
 
         #endregion
 

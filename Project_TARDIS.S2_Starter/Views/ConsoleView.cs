@@ -109,7 +109,7 @@ namespace Project_TARDIS
             sb.AppendFormat("Explore the fantasy world of Middle-Earth and uncover legendary treasure!");
             sb.AppendFormat("Defeat enemies of Mordor to gain experience and level up! ");
             sb.AppendFormat("Middle-Earth is evil and full of enemies so take this, it's ");
-			sb.AppendFormat("dangerous to go go alone! (aquired short sword +3)");
+			sb.AppendFormat("dangerous to go go alone! (aquired short-sword)");
             ConsoleUtil.DisplayMessage(sb.ToString());
             Console.WriteLine();
 
@@ -641,6 +641,7 @@ namespace Project_TARDIS
                 ConsoleUtil.DisplayMessage("ID: " + item.GameObjectID);
                 ConsoleUtil.DisplayMessage("Name: " + item.Name);
                 ConsoleUtil.DisplayMessage("Description: " + item.Description);
+				Console.WriteLine(item.itemArt);
                 ConsoleUtil.DisplayMessage("");
             }
 
@@ -672,27 +673,40 @@ namespace Project_TARDIS
 
         public void DisplayLookAt()
         {
-            ConsoleUtil.HeaderText = "Items in Current Location";
+            ConsoleUtil.HeaderText = "NPCs in current location";
             ConsoleUtil.DisplayReset();
 
             ConsoleUtil.DisplayMessage("");
-            ConsoleUtil.DisplayMessage("Items");
+            ConsoleUtil.DisplayMessage("NPCs");
             ConsoleUtil.DisplayMessage("");
 
             int locationID;
             locationID = _gameTraveler.SpaceTimeLocationID;
 
-            foreach (Item item in _gameUniverse.Items)
-            {
-                if (item.SpaceTimeLocationID == locationID)
-                {
-                    Console.WriteLine(item.Name);
-                    Console.WriteLine(item.Description);
-                    Console.WriteLine();
-                }
-            }
+			foreach (NPC npc in _gameUniverse.NPCs)
+			{
+				if (npc.SpaceTimeLocationID == locationID)
+				{
+					Console.WriteLine(npc.Name);
+					Console.WriteLine("Talk to? (y/n)");
+					Console.WriteLine();
+					string userChoice = Console.ReadLine();
+					if (userChoice == "y")
+					{
+						if (npc.SpaceTimeLocationID == locationID)
+						{
+							Console.WriteLine(npc.Message);
+							Console.WriteLine();
+						}
+						else
+						{
+							return;
+						}
+					}
+				}
+			}
 
-            DisplayContinuePrompt();
+			DisplayContinuePrompt();
         }
 
         public int DisplayPickUpItem()
@@ -719,22 +733,28 @@ namespace Project_TARDIS
                 }
             }
 
-            Console.Write("Enter Item ID: ");
-			itemID = int.Parse(Console.ReadLine());
-
-			foreach (Item item in _gameUniverse.Items)
+			bool valid = false;
+			while (!valid)
 			{
-				if (item.SpaceTimeLocationID == locationID)
+				itemID = DisplayGetIntegerInRange(0, 1000, "Enter Item ID or press 'esc': ");
+				foreach (Item item in _gameUniverse.Items)
 				{
-					if (item.GameObjectID == itemID)
+					if (item.SpaceTimeLocationID == locationID)
 					{
-						item.SpaceTimeLocationID = 0;
+						if (item.GameObjectID == itemID)
+						{
+							item.SpaceTimeLocationID = 0;
+							valid = true;
+							DisplayContinuePrompt();
+						}
+						else if (item.GameObjectID != locationID)
+						{
+							Console.WriteLine("Please enter a valid Item ID");
+						}
 					}
 				}
 			}
-
-            DisplayContinuePrompt();
-
+			//itemID = int.Parse(Console.ReadLine());
             return itemID;
         }
 
@@ -763,24 +783,28 @@ namespace Project_TARDIS
 				}
 			}
 
-			Console.Write("Enter Treasure ID: ");
-			treasureID = int.Parse(Console.ReadLine());
-
-			foreach (Treasure treasure in _gameUniverse.Treasures)
+			bool valid = false;
+			while (!valid)
 			{
-				if (treasure.SpaceTimeLocationID == locationID)
+				treasureID = DisplayGetIntegerInRange(0, 1000, "Enter Item ID or press 'esc': ");
+				foreach (Treasure treasure in _gameUniverse.Treasures)
 				{
-					if (treasure.GameObjectID == treasureID)
+					if (treasure.SpaceTimeLocationID == locationID)
 					{
-						treasure.SpaceTimeLocationID = 0;
+						if (treasure.GameObjectID == treasureID)
+						{
+							treasure.SpaceTimeLocationID = 0;
+							valid = true;
+							DisplayContinuePrompt();
+						}
+						else if (treasure.GameObjectID != locationID)
+						{
+							Console.WriteLine("Please enter a valid Item ID");
+						}
 					}
 				}
 			}
-
-			DisplayContinuePrompt();
-
 			return treasureID;
-
 		}
 
 		public int DisplayPutDownItem()
@@ -845,6 +869,35 @@ namespace Project_TARDIS
 			DisplayContinuePrompt();
 
 			return treasureIDToDrop;
+		}
+
+		private int DisplayGetIntegerInRange(int min, int max, string prompt)
+		{
+			int integer = 0;
+
+			bool validNumber = false;
+
+			while (!validNumber)
+			{
+				ConsoleUtil.DisplayPromptMessage(prompt);
+				if (int.TryParse(Console.ReadLine(), out integer))
+				{
+					if (integer >= min && integer <= max)
+					{
+						validNumber = true;
+					}
+					else
+					{
+						ConsoleUtil.DisplayMessage($"Input out of range ({min},{max})");
+					}
+				}
+				else
+				{
+					ConsoleUtil.DisplayMessage("Input need to be entered as integers. (1, 2, 3, etc)");
+				}
+			}
+
+			return integer;
 		}
 
 
